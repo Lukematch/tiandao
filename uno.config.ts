@@ -1,3 +1,7 @@
+/**
+ * unocss 配置项
+ */
+
 import type { Preset, SourceCodeTransformer } from 'unocss';
 import {
   defineConfig,

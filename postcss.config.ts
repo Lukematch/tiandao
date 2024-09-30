@@ -1,3 +1,7 @@
+/**
+ * postcss 配置项
+ */
+
 const path = require('path')
 const webpack = require('webpack')
 const postcssComment = require('postcss-comment')

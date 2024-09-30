@@ -13,6 +13,15 @@ node_modules
 dist
 *.local
 
+.env
+.env.development
+.env.production
+.npmrc
+
+.hintrc
+
+.gitignore
+
 # Editor directories and files
 .idea
 *.suo
@@ -25,6 +34,7 @@ dist
 .hbuilderx
 unpackage
 /stats.html
-# pnpm-lock.yaml
 yarn.lock
 package-lock.json
+pnpm-lock.yaml
+
