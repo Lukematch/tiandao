@@ -17,7 +17,7 @@ export default defineConfig((): UserConfig => {
     },
     // vite 相关配置
     server: {
-      port: 8080,
+      port: 6600,
       host: true,
       open: true,
       proxy,

@@ -1,16 +1,16 @@
 <template>
   <view class="page-wrap">
-    <u-navbar title="" placeholder left-icon="" right-icon="camera-fill" />
-    <view class="flex items-center bg-white pb-30rpx pl-30rpx pr-20rpx">
+    <!-- <u-navbar title="" placeholder left-icon="" right-icon="camera-fill" /> -->
+    <view class="flex items-center bg-white pb-30rpx pl-30rpx pr-20rpx mt-60rpx">
       <view class="mr-10rpx">
-        <u-avatar src="/static/images/logo.png" size="70" />
+        <u-avatar shape="square" src="/src/static/images/logo.png" size="70" class="mr-20rpx"/>
       </view>
       <view class="flex-1">
         <view class="pb-20rpx font-size-36rpx">
-          uni-app
+          老牛不吃草
         </view>
         <view class="u-tips-color font-size-28rpx" @click="toCopy">
-          微信号:uni-app
+          微信号：1234567890
         </view>
       </view>
       <view class="ml-10rpx p-10rpx">

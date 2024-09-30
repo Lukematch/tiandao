@@ -7,10 +7,6 @@
       <input v-model="tel" class="u-border-bottom" type="number" placeholder="请输入用户名">
       <view class="u-border-bottom my-40rpx flex">
         <input v-model="code" class="flex-1" type="number" placeholder="请输入密码">
-        <view>
-          <!-- <u-code ref="uCodeRef" @change="codeChange" /> -->
-          <!-- <u-button :text="tips" type="success" size="mini" @click="getCode" /> -->
-        </view>
       </view>
       <button class="login-btn" :class="linearGradient" :style="[inputStyle]" @tap="submit">
         登录
@@ -22,11 +18,12 @@
 <script setup lang="ts">
 import type { CSSProperties } from 'vue';
 import { createGradientClass } from 'mini-ground';
+import { setToken } from '@/utils';
 // import { useUserStore } from '@/store';
 
 // const userStore = useUserStore();
-const tel = ref<string>('18502811111');
-const code = ref<string>('1234');
+const tel = ref<string>('');
+const code = ref<string>('');
 const linearGradient = createGradientClass('45deg', '#16c8c8', 'orange');
 
 const inputStyle = computed<CSSProperties>(() => {
@@ -39,7 +36,7 @@ const inputStyle = computed<CSSProperties>(() => {
 });
 
 async function submit() {
-  if (!uni.$u.test.mobile(Number(tel.value))) {
+  if (!tel.value) {
     uni.$u.toast('请输入正确的用户名');
     return;
   }
@@ -47,12 +44,8 @@ async function submit() {
     uni.$u.toast('请输入密码');
     return;
   }
-  // 登录请求
-  // const res = await userStore.login({ phone: tel.value, code: code.value }).catch(() => {
-  //   uni.$u.toast('登录失败');
-  // });
-  // if (!res) return;
-  // setToken('1234567890');
+
+  setToken('1234567890');
   uni.reLaunch({ url: '/pages/tab/home/index' });
 }
 </script>

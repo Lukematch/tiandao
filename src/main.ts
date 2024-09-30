@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import Vue from 'vue'
-import App from './App.vue'
-import './uni.promisify.adaptor'
-
-Vue.config.productionTip = false
-
-const app = new (typeof App === 'function' ? App : Vue.extend(Object.assign({ mpType: 'app' }, App)))
-app.$mount();
-=======
 import { createSSRApp } from 'vue';
 
 // 引入UnoCSS
@@ -40,4 +30,3 @@ export function createApp() {
   };
 }
 // #endif
->>>>>>> e50d52e (Refactor  uni-app->uniapp-vue3-template)
