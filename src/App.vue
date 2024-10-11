@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { mpUpdate } from '@/utils/index';
+// import { mpUpdate } from '@/utils/index';
 
 onLaunch(() => {
   console.log('App Launch');
   // #ifdef MP-WEIXIN
-  mpUpdate();
+  // mpUpdate();
   // #endif
 });
 onShow(() => {
