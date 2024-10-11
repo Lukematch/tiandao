@@ -15,6 +15,12 @@
       }
     },
     {
+      "path": "pages/tab/home/components/GlobalSearch/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "path": "pages/tab/list/index",
       "style": {
         "navigationBarTitleText": "列表"

@@ -1,11 +1,38 @@
 <template>
   <view class="app">
     <view class="top">
+      <view class="sider">
+        <up-popup mode="left"
+        :overlayStyle="{
+          // 模糊化
+          backdropFilter: 'blur(3px)',
+          WebkitBackdropFilter: 'blur(3px)' // 兼容 Safari
+        }"
+        :customStyle="{
+          textAlign: 'center',
+          minWidth: '180px',
+          width: '100%',
+          height: '100%',
+          background: '#fff',
+          borderRadius: '0 20px 20px 0'
+        }"
+        :show="showSider" @close="()=>{showSider = false}">
+          <view>
+            <up-row>
+              <text>人生若只如初见，</text>
+            </up-row>
+            <up-row>
+              <text>何事秋风悲画扇</text>
+            </up-row>
+          </view>
+        </up-popup>
+      </view>
+      <!-- <right-search :showSider="showSearch" :closeSearch="closeSearch"/> -->
       <view class="top-search" style="display: flex; align-items: center; justify-content: space-between" :style="{
           background: isHidden ? 'rgba(255, 255, 255, 0.8)' : '#fff',
           backdropFilter: isHidden ? 'blur(10px)' : 'none'
         }">
-        <up-icon name="list" :style="{ fontSize: '16px', color: '#f56c6c' }"/>
+        <up-icon name="list" :style="{ fontSize: '16px', color: '#f56c6c' }" @click="toggleSider"/>
         <view style="display: flex; align-items: center;" @click="toggleHome">
           <image style="width: 30px; height: 30px;" src="/src/static/logo.png"/>
           小青牛
@@ -16,13 +43,6 @@
             name="search"
             @click="toggleSearch"
           />
-          <up-input
-            v-if="isSearchVisible"
-            type="text"
-            placeholder="请输入"
-            :style="{ width: '164px' }"
-            @blur="hideSearch"
-          />
         </view>
       </view>
       <view class="top-class" :class="{ 'hidden': isHidden }">
@@ -32,8 +52,8 @@
         </up-sticky>
       </view>
     </view>
-    <view ref="containerRef" class="container">
-      <fs-waterfall :key="listKey" :bottom="20" :column="2" :gap="0" :page-size="20" :list="list" :request="handleData">
+    <view class="container">
+      <fs-waterfall :key="listKey" :bottom="85" :column="2" :gap="page" :page-size="pageSize" :list="list" :request="handleData">
         <template #item="{item}">
           <!-- {{item}} -->
           <view
@@ -63,8 +83,7 @@
         </template>
       </fs-waterfall>
     </view>
-    <up-loading-page :loading="loading" loading-text="loading..."></up-loading-page>
-    <up-divider text="下滑获取更多文章..." :dashed="true"></up-divider>
+    <!-- <up-loading-page :loading="loading" loading-text="loading..."></up-loading-page> -->
   </view>
   <view class="wrap">
     <up-back-top icon="arrow-up" top="600" duration="500" :scroll-top="scrollTop"></up-back-top>
@@ -72,15 +91,31 @@
 </template>
 
 <script setup lang="ts">
-import data1 from "./0data1.json";
+import data1 from "./mockData/0data1.json";
 // import data2 from "./0data2.json";
-import data2 from "./1data.json";
-import data3 from "./2data.json";
-import FsWaterfall from "./FsWaterfall.vue";
+import data2 from "./mockData//1data.json";
+import data3 from "./mockData//2data.json";
+import FsWaterfall from "./components/FsWaterfall.vue";
+// import RightSearch from "./components/RightSearch.vue";
 import { ICardItem } from "./type";
 import { debounce } from 'lodash';
 
-// const colorArr = ["#409eff", "#67c23a", "#e6a23c", "#f56c6c", "#909399"];
+/**
+ * 左侧菜单 工具栏 Sider
+ */
+const showSider = ref<boolean>(false)
+
+const toggleSider = () => {
+showSider.value = true
+}
+/**
+* 右侧搜索栏
+*/
+const toggleSearch = () => {
+  uni.reLaunch({
+    url: 'pages/tab/home/components/GlobalSearch/index'
+  })
+}
 
 /**
  * 分类tabs
@@ -126,6 +161,9 @@ const makeData = () =>{
   }
   listKey.value++; // 强制更新
 }
+const page = ref(1);
+const pageSize = ref(10);
+
 const handleData = async (page: number, pageSize: number) => {
   return new Promise<ICardItem[]>((resolve) => {
     loading.value = true;
@@ -141,7 +179,6 @@ onMounted(()=>{
   makeData()
 })
 
-
 /**
  * 顶部top 滚动事件 点击事件 返回顶部
  */
@@ -151,8 +188,9 @@ const lastScrollTop = ref(0);
 
 const handleScroll = debounce(() => {
   scrollTop.value = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-  isHidden.value = scrollTop.value > lastScrollTop.value; // 向下滚动时隐藏
-  lastScrollTop.value = scrollTop.value <= 0 ? 0 : scrollTop.value; // 处理移动设备或负滚动
+  isHidden.value = scrollTop.value > lastScrollTop.value; // 向下滚动时隐藏class栏
+ // 处理移动设备或负滚动
+  lastScrollTop.value = scrollTop.value <= 0 ? 0 : scrollTop.value;
 }, 100); // 设置防抖时间
 
 const toggleHome = () => {
@@ -165,15 +203,9 @@ onPageScroll((e) => {
     scrollTop.value = e.scrollTop;
 });
 
-const isSearchVisible = ref(false);
-
-const toggleSearch = () => {
-  isSearchVisible.value = !isSearchVisible.value;
-};
-
-const hideSearch = () => {
-  isSearchVisible.value = false;
-};
+// const hideSearch = () => {
+//   isSearchVisible.value = false;
+// };
 
 onMounted(() => {
  window.addEventListener('scroll', handleScroll);
