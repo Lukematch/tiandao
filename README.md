@@ -24,6 +24,10 @@ Special thanks to [uniapp-vue3-template](https://github.com/oyjt/uniapp-vue3-tem
 
 ## 🚩 预览
 
+<p align = "center">
+<img src="./img/Snipaste_2024-10-08_17-31-14.png" height="600"/>
+</p>
+
 > loading...
 
 ## 🚩 运行
