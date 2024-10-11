@@ -1,28 +1,37 @@
-// 小程序更新检测
-export function mpUpdate() {
-  const updateManager = uni.getUpdateManager();
-  updateManager.onCheckForUpdate((res) => {
-    // 请求完新版本信息的回调
-    console.log(res.hasUpdate);
-  });
-  updateManager.onUpdateReady(() => {
-    uni.showModal({
-      title: '更新提示',
-      content: '检测到新版本，是否下载新版本并重启小程序？',
-      success(res) {
-        if (res.confirm) {
-          // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-          updateManager.applyUpdate();
-        }
-      },
-    });
-  });
-  updateManager.onUpdateFailed(() => {
-    // 新的版本下载失败
-    uni.showModal({
-      title: '已经有新版本了哟~',
-      content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~',
-      showCancel: false,
-    });
-  });
+import { sample } from 'lodash'
+
+/**
+ * @description: 获取当前时间
+ */
+export const getCurrentTime = () => {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth() + 1
+  const date = now.getDate()
+  const hours = now.getHours()
+  const minutes = now.getMinutes()
+  const seconds = now.getSeconds()
+  return `${year}-${month}-${date} ${hours}:${minutes}:${seconds}`
 }
+
+
+/**
+ * @description: Tag 标签  随机颜色
+ */
+export const randomTagColor = () => {
+  const colors = ['magenta', 'red', 'volcano', 'orange', 'gold', 'lime', 'green', 'cyan', 'blue', 'geekblue', 'purple']
+  return sample(colors)
+}
+
+
+
+/**
+ * @description: 等候区异步方法
+ */
+export const waitTime = (time: number = 100) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, time);
+  });
+};
